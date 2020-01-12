@@ -19,7 +19,7 @@ I personally use `Visual Studio` for my project.
 5. Add the `src` code in your main project.
 6. Build Project in Debug/Release Configuration.
 7. Open Solution Folder, and open Debug Folder.
-8. Open a new CMD inside and run `filterd.exe filter -f [your filter] [filter parameters] ... -f [your filter (n)] [filter (n) parameters] [name of the image].
+8. Open a new CMD inside and run `filterd.exe filter -f [your filter] [filter parameters] ... -f [your filter (n)] [filter (n) parameters] [name of the image]`.
 
 
->You can read comments to understand how the program works.
+>You can read the comments of the code, to understand how the program works.
