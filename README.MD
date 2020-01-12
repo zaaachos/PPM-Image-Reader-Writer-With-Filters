@@ -6,7 +6,7 @@ First of all, it uses a static library named `ppm` , which you could find it abo
 This `ppm lib` can read/write ppm format images only, and get the R-G-B values.
 >To read more info about PPM Image you can click here -> [PPM](http://paulbourke.net/dataformats/ppm/)
 
-Next, the project can make Images with the rgb values it got from loading, and can access at its pixels. In other words it can apply some filters we want, such as Linear, Blur, Gamma filter.
+Next, the project can make Images with the rgb values it got from loading, and can access at its pixels. In other words it can apply some filters we want, such as Linear, Blur, Gamma.
 
 I personally use `Visual Studio` for my project.
 >You can get Visual Studio from here -> [Visual Studio](https://visualstudio.microsoft.com/)
