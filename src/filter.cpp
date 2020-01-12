@@ -157,6 +157,7 @@ int main(int argc, char * argv[]) {
 	}
 	//If no string "filter" given in the arguments exit.
 	else {
+		printf("No 'filter' argument given! Try: 'filter -f ( linear / gamma )...' \n");
 		return 1;
 	}
 

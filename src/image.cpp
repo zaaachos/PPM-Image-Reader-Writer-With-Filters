@@ -16,11 +16,8 @@ using namespace std;
 namespace image {
 
 
-
 	class Image : public math::Array2D<Color>, public image::ImageIO {
 
-
-		
 	public:
 		float* temp = nullptr;							//Data for class Image.
 		int w = 0;

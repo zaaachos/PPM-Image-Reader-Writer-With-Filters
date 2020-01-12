@@ -36,17 +36,22 @@ void math::Array2D<T>::setData(const T* const& data_ptr) {
 		
 	}
 
-
 	if (getHeight() == 0 || getWidth() == 0 ) {						//Check if width or height = 0.
 		cout << "ERROR." << endl;
 		cout << "The height or the width is not valid." << endl;
 		return;
 	}
 	try {												//Check if the size of the array cannot be resized.
-		for (int k = 0;k < size;k++) {
-			buffer.at(k) = *(data_ptr + k);
-		}
 		
+		for (int k = 0;k < size;k++) {
+			if (typeid(T).name() != typeid(data_ptr[k]).name())
+				buffer.at(k) = *(data_ptr + k);
+			else {
+				cout << "ERROR." << endl;
+				cout << "The buffer can not be resized." << endl;
+				return;
+			}
+		}
 	}
 	catch (...) {								//catch the exception.
 		cout << "ERROR." << endl;

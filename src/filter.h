@@ -63,21 +63,21 @@ namespace filter {
 			cout << "Applying Linear Filter: ";
 			int k = 0;	
 			int z = 0;
-			
+			Image filtered(image);
 			//while not reach at the end of the image.
-			while (z < image.len/3) {																
-				image.pixels[z] = getParameterA() * image.pixels[z] + getParameterC();				//Apply the filter, by changing the rgb values.
+			while (z < filtered.len/3) {
+				filtered.pixels[z] = getParameterA() * filtered.pixels[z] + getParameterC();				//Apply the filter, by changing the rgb values.
 
-				image.temp[k] = image.pixels[z].r > 1.0 ? 1.0: image.pixels[z].r < 0.0? 0.0: image.pixels[z].r;					//Apply the filter at array temp of the Image.
+				filtered.temp[k] = filtered.pixels[z].r > 1.0 ? 1.0: filtered.pixels[z].r < 0.0? 0.0: filtered.pixels[z].r;					//Apply the filter at array temp of the Image.
 
-				image.temp[k + 1] = image.pixels[z].g > 1.0 ? 1.0 : image.pixels[z].g < 0.0 ? 0.0 : image.pixels[z].g;
-				image.temp[k + 2] = image.pixels[z].b > 1.0 ? 1.0 : image.pixels[z].b < 0.0 ? 0.0 : image.pixels[z].b;
+				filtered.temp[k + 1] = filtered.pixels[z].g > 1.0 ? 1.0 : filtered.pixels[z].g < 0.0 ? 0.0 : filtered.pixels[z].g;
+				filtered.temp[k + 2] = filtered.pixels[z].b > 1.0 ? 1.0 : filtered.pixels[z].b < 0.0 ? 0.0 : filtered.pixels[z].b;
 				k +=3;
 				z++;
 				
 			}
 			cout << "DONE."<<endl;
-			return image;			//Return filtered image.
+			return filtered;			//Return filtered image.
 
 
 		}
@@ -127,19 +127,19 @@ namespace filter {
 			cout << "Applying Gamma Filter: ";
 			int k = 0;
 			int z = 0;
-			
+			Image filtered(image);
 			//while not reach at the end of the image.
-			while (z < image.len / 3) {	
+			while (z < filtered.len / 3) {
 
-				image.temp[k] = pow(image.pixels[z].r, getParameterY());									//Apply the filter, by changing the rgb values.
-				image.temp[k + 1] =pow(image.pixels[z].g, getParameterY());
-				image.temp[k + 2] = pow(image.pixels[z].b, getParameterY());
+				filtered.temp[k] = pow(filtered.pixels[z].r, getParameterY());									//Apply the filter, by changing the rgb values.
+				filtered.temp[k + 1] =pow(filtered.pixels[z].g, getParameterY());
+				filtered.temp[k + 2] = pow(filtered.pixels[z].b, getParameterY());
 				k += 3;
 				z++;
 
 			}
 			cout << "DONE." << endl;
-			return image;				//Return filtered image.
+			return filtered;				//Return filtered image.
 		}
 
 		//Setter for paramater y.
@@ -181,20 +181,20 @@ namespace filter {
 
 
 		virtual Image operator << (const Image& image) {
-			
+			Image filtered(image);
 			cout << "Applying Blur Filter: ";
 			unsigned int height = image.hei;			//Get the height of the image.
 			unsigned int width = image.wid;				//Get the width of the image.
 			Color pixel;		//Get the pixel.
 			unsigned int ind = 0;				//Index for array pixels.
-
+			
 
 			int sum = 0;		//Save the SUM.	
 			float red = 0;
 			float green = 0;
 			float blue = 0;
 			int k = 0;
-		
+			
 			for (unsigned int j = 0; j < height; j++) {
 
 				for (unsigned int i = 0; i < width; i++) {
@@ -203,7 +203,7 @@ namespace filter {
 
 						for (int n = -(getN() / 2); n < (getN() / 2); n++) {
 							
-							pixel = image.rgb->operator()(j + m, i + n);			//Get the pixel from the image.
+							pixel = filtered.rgb->operator()(j + m, i + n);			//Get the pixel from the image.
 				
 							sum++;
 
@@ -213,13 +213,13 @@ namespace filter {
 						}
 					}
 					
-					image.pixels[ind].r = (red/sum);					//Store our new pixels.
-					image.pixels[ind].g = (green/sum); 
-					image.pixels[ind].b = (blue/sum);
+					filtered.pixels[ind].r = (red/sum);					//Store our new pixels.
+					filtered.pixels[ind].g = (green/sum);
+					filtered.pixels[ind].b = (blue/sum);
 
-					image.temp[k] = image.pixels[ind].r;									//Apply the filter, by changing the rgb values.
-					image.temp[k + 1] = image.pixels[ind].g;
-					image.temp[k + 2] = image.pixels[ind].b;
+					filtered.temp[k] = filtered.pixels[ind].r;									//Apply the filter, by changing the rgb values.
+					filtered.temp[k + 1] = filtered.pixels[ind].g;
+					filtered.temp[k + 2] = filtered.pixels[ind].b;
 
 					ind++;			//increase index.
 
@@ -231,8 +231,9 @@ namespace filter {
 				}
 					
 			}
+			
 			cout << "DONE" << endl;
-			return image;				//Return filtered image.
+			return filtered;				//Return filtered image.
 		}
 
 
