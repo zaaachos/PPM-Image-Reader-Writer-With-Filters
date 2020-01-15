@@ -19,7 +19,7 @@ I personally use `Visual Studio` for my project.
 5. Add the `src` code in your main project.
 6. Build Project in Debug/Release Configuration.
 7. Open Solution Folder, and open Debug Folder.
-8. Open a new CMD inside and run `filterd.exe filter -f [your filter] [filter parameters] ... -f [your filter (n)] [filter (n) parameters] [name of the image]`.
+8. Open a new CMD inside and run `>filter/filterd ( whatever configuration file you choose ) -f [your filter] [filter parameters] ... -f [your filter (n)] [filter (n) parameters] [name of the image]`.
 
 ##### To open PPM Images you can download [Photoshop](https://www.adobe.com/gr_en/products/photoshop.html?sdid=9WGN461H&mv=search&ef_id=CjwKCAiApOvwBRBUEiwAcZGdGISzaOHhX2WuugU6PY8YLiYy0WifNO8j4ICWMUylp2V1-IZZaJoULBoCLs0QAvD_BwE:G:s&s_kwcid=AL!3085!3!341241846476!b!!g!!%2Bphoto%20%2Bshop%20%2Bimage) or online [PPM Viewer](http://paulcuth.me.uk/netpbm-viewer/)
 
