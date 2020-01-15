@@ -68,15 +68,6 @@ int main(int argc, char * argv[]) {
 			found = inputs.find(f,found+1);			//Next '-f' char in the inputs.
 			
 			if (data[f_index] == "-f") {			//Begin to apply filters from the -f index.
-
-				//If the amount of filters are more than 1, try to modify the filtered_ image again ( on top of it ).
-				if (f_index > 2) {		
-					
-					lin = FilterLinear(*pointer);			//The filters now will modify the filtered_ image.
-					gam = FilterGamma(*pointer);
-					blur = FilterBlur(*pointer);
-
-				}
 				
 				//Case: Linear
 				if (data[f_index + 1] == "linear") {
