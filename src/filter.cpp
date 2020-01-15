@@ -24,8 +24,8 @@ int main(int argc, char * argv[]) {
 	data = new string[argc];				//Initilize the size 
 
 	//Save the argumentes into the string data
-	for (int i = 1; i < argc; i++) {
-		data[i - 1] = argv[i];
+	for (int i = 0; i < argc; i++) {
+		data[i] = argv[i];
 		inputs += argv[i];
 		
 	}
@@ -34,15 +34,16 @@ int main(int argc, char * argv[]) {
 
 	string f = "-f";
 
-	string filtered = "filtered_" + data[argc - 2];			//Save the new filename.
+	string filtered = "filtered_" + data[argc - 1];			//Save the new filename.
 	
 	//Initiliaze a image pointer to -> at an Image Object. This will help us to modify the filtered_ images again.
 	Image* pointer;
 	Image image = Image();
 	pointer = &image;
 
-	pointer->load(data[argc - 2], "ppm");				//Load the file ,which console read, at the end of arguments we gave.
+	pointer->load(data[argc - 1], "ppm");				//Load the file ,which console read, at the end of arguments we gave.
 	pointer->setPixels();
+	Image filt(image);							//Store the filtered image.
 	
 	FilterLinear lin(*pointer);							//Initiliaze our 2 filters with the pointer.
 	FilterGamma gam(*pointer);
@@ -53,7 +54,7 @@ int main(int argc, char * argv[]) {
 	
 
 	//Check if the string given has the arg 'filter'. If not close the program.
-	if (data[0] == "filter") {
+	if (data[0] == "filter" || data[0] == "filterd") {
 		f_index++;
 		size_t found = inputs.find(f);				//Find the first '-f' char.
 		if (data[1] != "-f") {
@@ -70,10 +71,7 @@ int main(int argc, char * argv[]) {
 
 				//If the amount of filters are more than 1, try to modify the filtered_ image again ( on top of it ).
 				if (f_index > 2) {		
-					Image filterd = Image();
-					pointer = &filterd;						//Now the pointer -> at the new Image.
-					pointer->load(filtered, "ppm");
-					pointer->setPixels();
+					
 					lin = FilterLinear(*pointer);			//The filters now will modify the filtered_ image.
 					gam = FilterGamma(*pointer);
 					blur = FilterBlur(*pointer);
@@ -98,7 +96,7 @@ int main(int argc, char * argv[]) {
 					
 					lin.setParameterA(stof(data[f_index + 2]), stof(data[f_index + 3]), stof(data[f_index + 4]));			//Set a and c parameters of FilterLinear class.
 					lin.setParameterC(stof(data[f_index + 5]), stof(data[f_index + 6]), stof(data[f_index + 7]));
-					(lin << *pointer).save(filtered, "ppm");				//Save the filtered_ image.
+					filt = (lin << *pointer);				//Save the filtered_ image.
 					f_index = f_index + 8;			//Go to the next -f char.
 
 				}
@@ -116,7 +114,7 @@ int main(int argc, char * argv[]) {
 					}
 
 					blur.setN(stof(data[f_index + 2]));
-					(blur << *pointer).save(filtered, "ppm");				//Save the filtered_ image.
+					filt = (blur << *pointer);				//Save the filtered_ image.
 					f_index = f_index + 3;			//Go to the next -f char.
 
 				}
@@ -132,7 +130,7 @@ int main(int argc, char * argv[]) {
 					}
 					
 					gam.setParameterY(stof(data[f_index + 2]));					//Set y parameter of FilterGamma class.
-					(gam << *pointer).save(filtered, "ppm");					//Save the filtered_ image.
+					filt = (gam << *pointer);				//Save the filtered_ image.
 					f_index = f_index + 3;				//Go to the next -f char.
 				}
 				//Case: No filter found.
@@ -153,6 +151,7 @@ int main(int argc, char * argv[]) {
 				return 1;
 			}
 		}
+		filt.save(filtered, "ppm");					//Now save the final filtered image.
 		
 	}
 	//If no string "filter" given in the arguments exit.
